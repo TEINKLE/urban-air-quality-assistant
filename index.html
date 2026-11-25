@@ -205,5 +205,341 @@ index.html (Complete Gen AI App)
 
     .list-card {
       border: 1px solid #e2e8f0;
-      border-radius:
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      margin-top: 0.75rem;
+      background: #ffffff;
+    }
 
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: var(--pill);
+      color: var(--primary-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .status-note {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .error-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="tag">Challenge 06 • Urban Sustainability</span>
+      <h1>Urban Air Quality Assistant</h1>
+      <p>Turn your family's daily routine into tailored low-emission steps, indoor air hacks, and clear impact insights.</p>
+    </header>
+
+    <main>
+      <section class="card" aria-label="Routine Input Form">
+        <form id="planForm">
+          <div class="api-box">
+            <label for="apiKeyInput">Google Gemini API Key (Optional for Demo Mode)</label>
+            <input
+              id="apiKeyInput"
+              type="password"
+              autocomplete="off"
+              placeholder="Paste Gemini API Key (AIza...) for live Gen AI generation"
+            />
+            <p class="helper-text">Runs directly in your browser—your key is never stored. Leave blank to test with smart routine analysis.</p>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label for="cityInput">City &amp; Locality</label>
+              <input id="cityInput" type="text" value="Mumbai, Maharashtra" required />
+            </div>
+            <div>
+              <label for="householdInput">Household Profile</label>
+              <input id="householdInput" type="text" value="4 members (2 working adults, 1 senior, 1 child)" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="routineInput">Family's Daily Routine (Commute, Cooking, Cooling, Habits)</label>
+            <textarea id="routineInput" required>Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs.</textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" id="generateBtn" class="btn-primary">✨ Generate Air Quality Plan</button>
+            <button type="button" id="sampleBtn" class="btn-secondary">Load Sample Routine</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="outputSection" role="region" aria-live="polite" aria-label="Generated Air Quality Plan"></section>
+    </main>
+
+    <footer>
+      Built by Nilima Pralhad Ingole • Powered by Google Gemini Gen AI
+    </footer>
+  </div>
+
+  <script>
+    const DOM = {
+      form: document.getElementById("planForm"),
+      apiKeyInput: document.getElementById("apiKeyInput"),
+      cityInput: document.getElementById("cityInput"),
+      householdInput: document.getElementById("householdInput"),
+      routineInput: document.getElementById("routineInput"),
+      sampleBtn: document.getElementById("sampleBtn"),
+      generateBtn: document.getElementById("generateBtn"),
+      outputSection: document.getElementById("outputSection")
+    };
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function buildFallbackPlan(city, household, routine) {
+      const cleanCity = city.trim() || "Mumbai, Maharashtra";
+      const cleanHousehold = household.trim() || "4-member household";
+      const text = routine.toLowerCase();
+
+      const steps = [];
+      const indoorHacks = [];
+
+      if (text.includes("car") || text.includes("commute") || text.includes("traffic") || text.includes("petrol")) {
+        steps.push({
+          difficulty: "Medium",
+          action: "Shift 2 weekday commutes to Metro/Local train or carpool, and avoid idling in peak 9 AM / 7 PM traffic.",
+          replaces: "Solo peak-hour petrol car trips"
+        });
+      }
+
+      if (text.includes("ac") || text.includes("cooling")) {
+        steps.push({
+          difficulty: "Easy",
+          action: "Set AC thermostats to 24–25°C and clean mesh filters every 14 days to cut compressor energy load by 15%.",
+          replaces: "Continuous low-temperature AC cooling with clogged filters"
+        });
+      }
+
+      if (text.includes("laundry") || text.includes("clothes") || text.includes("dry")) {
+        steps.push({
+          difficulty: "Easy",
+          action: "Batch laundry into full cold-water loads and air-dry on a sunny balcony instead of damp indoor rooms.",
+          replaces: "Frequent partial loads & indoor moisture buildup"
+        });
+      }
+
+      if (steps.length === 0) {
+        steps.push({
+          difficulty: "Easy",
+          action: "Combine errands into single off-peak trips and switch off idle appliances at the plug.",
+          replaces: "Fragmented trips & standby power waste"
+        });
+      }
+
+      if (text.includes("stove") || text.includes("cook") || text.includes("chimney")) {
+        indoorHacks.push({
+          area: "Kitchen • Morning & Evening",
+          tip: "Turn on an exhaust fan or crack a kitchen window 5 minutes before cooking, and cover pots while boiling or simmering."
+        });
+      }
+
+      if (text.includes("incense") || text.includes("agarbatti") || text.includes("smoke")) {
+        indoorHacks.push({
+          area: "Living Room • Morning",
+          tip: "Switch daily indoor incense/agarbatti to essential-oil diffusers or burn incense only near an open balcony."
+        });
+      }
+
+      indoorHacks.push({
+        area: "Bedrooms • Daily",
+        tip: "Keep 2–3 low-maintenance indoor plants (Snake Plant, Areca Palm) and wet-mop floors instead of dry sweeping."
+      });
+
+      return {
+        source: "Demo Routine Engine",
+        summary: `Tailored air quality plan for your ${cleanHousehold} household in ${cleanCity}. Small shifts in peak-hour travel and indoor ventilation can cut personal pollution exposure significantly within 7 days.`,
+        metrics: {
+          co2Saved: "16.5 kg CO₂ / week",
+          pm25Reduction: "~38% lower indoor PM2.5",
+          healthImpact: "Reduced airway irritation & better sleep quality for seniors and children"
+        },
+        steps,
+        indoorHacks
+      };
+    }
+
+    async function generateWithGemini(apiKey, city, household, routine) {
+      const prompt = [
+        "You are an urban air quality and household sustainability advisor.",
+        "Return ONLY valid JSON with keys: summary, metrics (co2Saved, pm25Reduction, healthImpact), steps (array of {difficulty, action, replaces}), indoorHacks (array of {area, tip}).",
+        `City: ${city}`,
+        `Household: ${household}`,
+        `Daily Routine: ${routine}`
+      ].join("\n");
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: "application/json" }
+          })
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Gemini API request failed (${response.status})`);
+      }
+
+      const data = await response.json();
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawText) {
+        throw new Error("Empty response received from Gemini API");
+      }
+
+      const parsed = JSON.parse(rawText);
+      return {
+        source: "Google Gemini (gemini-2.5-flash)",
+        summary: parsed.summary || `Tailored air quality plan for ${household} in ${city}.`,
+        metrics: {
+          co2Saved: parsed.metrics?.co2Saved || "14.0 kg CO₂ / week",
+          pm25Reduction: parsed.metrics?.pm25Reduction || "~35% lower indoor PM2.5",
+          healthImpact: parsed.metrics?.healthImpact || "Cleaner indoor air and lower daily exposure"
+        },
+        steps: Array.isArray(parsed.steps) && parsed.steps.length ? parsed.steps : buildFallbackPlan(city, household, routine).steps,
+        indoorHacks: Array.isArray(parsed.indoorHacks) && parsed.indoorHacks.length ? parsed.indoorHacks : buildFallbackPlan(city, household, routine).indoorHacks
+      };
+    }
+
+    function renderPlan(plan) {
+      const stepsHtml = plan.steps
+        .map(
+          (item) => `
+            <div class="list-card">
+              <span class="badge">${escapeHtml(item.difficulty || "Actionable")}</span>
+              <p>${escapeHtml(item.action || "")}</p>
+              ${item.replaces ? `<p class="helper-text"><strong>Replaces:</strong> ${escapeHtml(item.replaces)}</p>` : ""}
+            </div>
+          `
+        )
+        .join("");
+
+      const hacksHtml = plan.indoorHacks
+        .map(
+          (hack) => `
+            <div class="list-card">
+              <span class="badge">${escapeHtml(hack.area || "Home")}</span>
+              <p>${escapeHtml(hack.tip || "")}</p>
+            </div>
+          `
+        )
+        .join("");
+
+      DOM.outputSection.innerHTML = `
+        <div class="card">
+          <h2>📊 Clear Impact Insights</h2>
+          <p class="status-note">Mode: ${escapeHtml(plan.source)}</p>
+          <p>${escapeHtml(plan.summary)}</p>
+          <div class="metrics">
+            <div class="metric-box">
+              <div class="metric-label">Est. Weekly CO₂ Saved</div>
+              <div class="metric-value">${escapeHtml(plan.metrics.co2Saved)}</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Indoor PM2.5 Reduction</div>
+              <div class="metric-value">${escapeHtml(plan.metrics.pm25Reduction)}</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Household Health Impact</div>
+              <div class="metric-value">${escapeHtml(plan.metrics.healthImpact)}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🚲 Tailored Low-Emission Steps</h2>
+          ${stepsHtml}
+        </div>
+
+        <div class="card">
+          <h2>🏡 Indoor Air Quality Hacks</h2>
+          ${hacksHtml}
+        </div>
+      `;
+    }
+
+    function renderError(message) {
+      DOM.outputSection.innerHTML = `
+        <div class="card">
+          <div class="error-box">${escapeHtml(message)}</div>
+        </div>
+      `;
+    }
+
+    DOM.sampleBtn.addEventListener("click", () => {
+      DOM.cityInput.value = "Mumbai, Maharashtra";
+      DOM.householdInput.value = "4 members (2 working adults, 1 senior, 1 child)";
+      DOM.routineInput.value =
+        "Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs.";
+    });
+
+    DOM.form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const apiKey = DOM.apiKeyInput.value.trim();
+      const city = DOM.cityInput.value.trim();
+      const household = DOM.householdInput.value.trim();
+      const routine = DOM.routineInput.value.trim();
+
+      if (!city || !household || !routine) {
+        renderError("Please fill out City & Locality, Household Profile, and Family's Daily Routine.");
+        return;
+      }
+
+      DOM.generateBtn.disabled = true;
+      DOM.generateBtn.textContent = "Generating Plan...";
+
+      try {
+        const plan = apiKey
+          ? await generateWithGemini(apiKey, city, household, routine)
+          : buildFallbackPlan(city, household, routine);
+        renderPlan(plan);
+      } catch (err) {
+        const fallback = buildFallbackPlan(city, household, routine);
+        renderPlan(fallback);
+        renderError(`${err.message}. Showing smart routine analysis fallback instead.`);
+      } finally {
+        DOM.generateBtn.disabled = false;
+        DOM.generateBtn.textContent = "✨ Generate Air Quality Plan";
+      }
+    });
+  </script>
+</body>
+</html>
+   
+    
