@@ -18,3 +18,10 @@ An AI-powered web application that takes an urban family's daily routine and gen
           │
           ▼  Deterministic JSON Response
 [Impact Metrics + Low-Emission Steps + Indoor Hacks]
+Markdown
+
+
+## 🧪 Testing & Quality Checks
+- Run automated unit tests with Node.js (version 18 or higher):
+  ```bash
+  node --test test-plan.mjs
