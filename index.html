@@ -12,256 +12,198 @@ index.html (Complete Gen AI App)
       --bg: #f0fdf4;
       --card: #ffffff;
       --text: #1e293b;
-      --muted: #64748b;
+      --muted: #475569;
       --border: #cbd5e1;
       --pill: #ccfbf1;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.6; padding: 1.25rem; }
-    .container { max-width: 860px; margin: 0 auto; }
-    header { text-align: center; margin-bottom: 1.5rem; }
-    header h1 { color: var(--primary); font-size: 1.9rem; margin-bottom: 0.3rem; }
-    header p { color: var(--muted); font-size: 0.96rem; }
-    .tag { display: inline-block; background: var(--pill); color: var(--primary-dark); font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.65rem; border-radius: 999px; margin-bottom: 0.5rem; }
-    .card { background: var(--card); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin-bottom: 1.4rem; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-    @media (max-width: 620px) { .grid-2 { grid-template-columns: 1fr; } }
-    label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 0.3rem; }
-    input, textarea, select { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; }
-    textarea { min-height: 105px; resize: vertical; }
-    .api-box { background: #f8fafc; border: 1px dashed #94a3b8; padding: 0.85rem; border-radius: 8px; margin-bottom: 1rem; }
-    .api-box small { color: var(--muted); display: block; margin-top: 0.3rem; }
-    .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
-    button { background: var(--primary); color: #fff; border: none; padding: 0.75rem 1.4rem; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: 0.2s; }
-    button:hover { background: var(--primary-dark); }
-    button.sec { background: #e2e8f0; color: var(--text); }
-    button.sec:hover { background: #cbd5e1; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .hidden { display: none; }
-    .sec-title { font-size: 1.15rem; color: var(--primary); border-bottom: 2px solid var(--pill); padding-bottom: 0.35rem; margin-bottom: 0.9rem; }
-    .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 0.8rem; }
-    .metric { background: #f8fafc; border-left: 4px solid var(--primary); padding: 0.9rem; border-radius: 6px; }
-    .metric small { display: block; text-transform: uppercase; font-size: 0.76rem; color: var(--muted); font-weight: 700; }
-    .metric strong { font-size: 1.05rem; color: var(--text); }
-    .item { padding: 0.8rem 0; border-bottom: 1px solid #f1f5f9; }
-    .item:last-child { border-bottom: none; }
-    .badge { display: inline-block; background: var(--pill); color: var(--primary-dark); padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.76rem; font-weight: 700; margin-right: 0.4rem; }
-    .error { background: #fee2e2; color: #b91c1c; padding: 0.75rem; border-radius: 8px; margin-top: 1rem; }
-    footer { text-align: center; font-size: 0.82rem; color: var(--muted); margin-top: 1.5rem; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <span class="tag">Gen AI Powered • Challenge 06</span>
-      <h1>🌿 Urban Air Quality Assistant</h1>
-      <p>Turn your family's daily routine into tailored low-emission steps, indoor air hacks, and clear impact insights.</p>
-    </header>
 
-    <div class="card">
-      <div class="api-box">
-        <label for="apiKey">Google Gemini API Key (Optional for Demo Mode)</label>
-        <input id="apiKey" type="password" placeholder="Paste Gemini API Key (AIza...) for live Gen AI generation" />
-        <small>Runs directly in your browser—your key is never stored. Leave blank to test with smart routine analysis.</small>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <label for="city">City & Locality</label>
-          <input id="city" type="text" value="Mumbai, Maharashtra" placeholder="e.g., Mumbai, Delhi, Bengaluru" />
-        </div>
-        <div>
-          <label for="family">Household Profile</label>
-          <input id="family" type="text" value="4 members (2 working adults, 1 senior, 1 child)" placeholder="e.g., 4 members" />
-        </div>
-      </div>
-
-      <label for="routine">Family's Daily Routine (Commute, Cooking, Cooling, Habits)</label>
-      <textarea id="routine" placeholder="Describe your family's daily routine...">Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs.</textarea>
-
-      <div class="btn-row">
-        <button id="runBtn" onclick="generatePlan()">✨ Generate Air Quality Plan</button>
-        <button class="sec" type="button" onclick="loadSample()">Load Sample Routine</button>
-      </div>
-      <div id="errBox" class="error hidden"></div>
-    </div>
-
-    <div id="output" class="hidden">
-      <div class="card">
-        <h2 class="sec-title">📊 Clear Impact Insights</h2>
-        <p id="summaryText"></p>
-        <div class="impact-grid">
-          <div class="metric">
-            <small>Est. Weekly CO₂ Saved</small>
-            <strong id="co2Out">-</strong>
-          </div>
-          <div class="metric">
-            <small>Indoor PM2.5 Reduction</small>
-            <strong id="pmOut">-</strong>
-          </div>
-          <div class="metric">
-            <small>Household Health Impact</small>
-            <strong id="healthOut">-</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2 class="sec-title">🚲 Tailored Low-Emission Steps</h2>
-        <div id="stepsOut"></div>
-      </div>
-
-      <div class="card">
-        <h2 class="sec-title">🏡 Indoor Air Quality Hacks</h2>
-        <div id="hacksOut"></div>
-      </div>
-    </div>
-
-    <footer>Built by Nilima Pralhad Ingole • Powered by Google Gemini Gen AI</footer>
-  </div>
-
-  <script>
-    function loadSample() {
-      document.getElementById('city').value = 'Mumbai, Maharashtra';
-      document.getElementById('family').value = '4 members (2 working adults, 1 senior, 1 child)';
-      document.getElementById('routine').value =
-        'Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs.';
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
     }
 
-    async function generatePlan() {
-      const btn = document.getElementById('runBtn');
-      const errBox = document.getElementById('errBox');
-      const output = document.getElementById('output');
-      const apiKey = document.getElementById('apiKey').value.trim();
-      const city = document.getElementById('city').value.trim() || 'Metro City';
-      const family = document.getElementById('family').value.trim() || '4 members';
-      const routine = document.getElementById('routine').value.trim();
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 1.25rem;
+    }
 
-      errBox.classList.add('hidden');
-      if (routine.length < 10) {
-        errBox.textContent = 'Please enter at least 10 characters describing your daily routine.';
-        errBox.classList.remove('hidden');
-        return;
-      }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
 
-      btn.disabled = true;
-      btn.textContent = '⏳ Analyzing Routine with Gen AI...';
+    header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
 
-      try {
-        let data;
-        if (apiKey) {
-          const prompt = `You are an expert Urban Air Quality & Sustainability Advisor. Analyze this family's daily routine in ${city} (${family}): "${routine}".
-Return ONLY valid JSON with this exact structure:
-{
-  "summary": "2-sentence personalized overview",
-  "impactInsights": {
-    "co2": "e.g., 14–18 kg CO2/week",
-    "pm25": "e.g., ~35% lower indoor PM2.5",
-    "health": "Clear respiratory benefit for the household"
-  },
-  "lowEmissionSteps": [
-    {"action": "Specific step", "replaces": "Current habit", "difficulty": "Easy/Medium"}
-  ],
-  "indoorAirHacks": [
-    {"hack": "Specific indoor hack", "context": "Room or timing"}
-  ]
-}`;
+    header h1 {
+      color: var(--primary-dark);
+      font-size: 1.9rem;
+      margin-bottom: 0.35rem;
+    }
 
-          const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: { responseMimeType: 'application/json', temperature: 0.4 }
-              })
-            }
-          );
+    header p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
 
-          const json = await res.json();
-          if (!res.ok) throw new Error(json.error?.message || 'Gemini API request failed.');
-          data = JSON.parse(json.candidates[0].content.parts[0].text);
-        } else {
-          await new Promise(r => setTimeout(r, 600));
-          const hasCar = /car|drive|petrol|diesel|commute|traffic/i.test(routine);
-          const hasCooking = /cook|fry|stove|gas|kitchen|incense|agarbatti/i.test(routine);
-          const hasAC = /ac|air condition|window|closed/i.test(routine);
+    .tag {
+      display: inline-block;
+      background: var(--pill);
+      color: var(--primary-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+    }
 
-          data = {
-            summary: `Tailored air quality plan for your ${family} household in ${city}. Small shifts in peak-hour travel and indoor ventilation can cut personal pollution exposure significantly within 7 days.`,
-            impactInsights: {
-              co2: hasCar ? '16.5 kg CO₂ / week' : '7.2 kg CO₂ / week',
-              pm25: hasCooking ? '~38% lower indoor PM2.5' : '~25% lower indoor PM2.5',
-              health: 'Reduced airway irritation & better sleep quality for seniors and children'
-            },
-            lowEmissionSteps: [
-              {
-                action: hasCar
-                  ? 'Shift 2 weekday commutes to Metro/Local train or carpool, and avoid idling in peak 9 AM / 7 PM traffic.'
-                  : 'Combine short neighborhood errands into a single walking or cycling trip during off-peak hours.',
-                replaces: hasCar ? 'Solo peak-hour petrol car trips' : 'Multiple short motorized trips',
-                difficulty: 'Medium'
-              },
-              {
-                action: 'Set AC thermostats to 24–25°C and clean mesh filters every 14 days to cut compressor energy load by 15%.',
-                replaces: 'Continuous low-temperature AC cooling with clogged filters',
-                difficulty: 'Easy'
-              },
-              {
-                action: 'Batch laundry into full cold-water loads and air-dry on a sunny balcony instead of damp indoor rooms.',
-                replaces: 'Frequent partial loads & indoor moisture buildup',
-                difficulty: 'Easy'
-              }
-            ],
-            indoorAirHacks: [
-              {
-                hack: hasCooking
-                  ? 'Turn on an exhaust fan or crack a kitchen window 5 minutes before cooking, and cover pots while boiling/simmering.'
-                  : 'Cross-ventilate rooms for 15 minutes between 6:30 AM and 8:00 AM when urban traffic emissions are lowest.',
-                context: 'Kitchen • Morning & Evening'
-              },
-              {
-                hack: 'Switch daily indoor incense/agarbatti to essential-oil diffusers or burn incense only near an open balcony.',
-                context: 'Living Room • Morning'
-              },
-              {
-                hack: 'Keep 2–3 low-maintenance indoor plants (Snake Plant, Areca Palm) and wet-mop floors instead of dry sweeping.',
-                context: 'Bedrooms • Daily'
-              }
-            ]
-          };
-        }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      margin-bottom: 1.4rem;
+    }
 
-        document.getElementById('summaryText').textContent = data.summary;
-        document.getElementById('co2Out').textContent = data.impactInsights.co2;
-        document.getElementById('pmOut').textContent = data.impactInsights.pm25;
-        document.getElementById('healthOut').textContent = data.impactInsights.health;
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
 
-        document.getElementById('stepsOut').innerHTML = data.lowEmissionSteps.map(s => `
-          <div class="item">
-            <span class="badge">${s.difficulty}</span><strong>${s.action}</strong>
-            <div style="font-size:0.86rem;color:#64748b;margin-top:0.2rem;">Replaces: ${s.replaces}</div>
-          </div>
-        `).join('');
-
-        document.getElementById('hacksOut').innerHTML = data.indoorAirHacks.map(h => `
-          <div class="item">
-            <span class="badge">${h.context}</span><strong>${h.hack}</strong>
-          </div>
-        `).join('');
-
-        output.classList.remove('hidden');
-      } catch (e) {
-        errBox.textContent = e.message;
-        errBox.classList.remove('hidden');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = '✨ Generate Air Quality Plan';
+    @media (max-width: 620px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
       }
     }
-  </script>
-</body>
-</html>
 
+    .field-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.72rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #ffffff;
+    }
+
+    textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    .api-box {
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      padding: 0.9rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .helper-text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 0.78rem 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 3px solid var(--primary-dark);
+      outline-offset: 2px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 680px) {
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metric-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.9rem;
+    }
+
+    .metric-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 0.25rem;
+    }
+
+    .list-card {
+      border: 1px solid #e2e8f0;
+      border-radius:
 
