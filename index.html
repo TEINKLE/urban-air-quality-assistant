@@ -4,6 +4,7 @@ index.html (Complete Gen AI App)
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Urban Air Quality Assistant turns household daily routines into low-emission steps, indoor air quality hacks, and impact insights." />
   <title>Urban Air Quality Assistant | Gen AI Powered</title>
   <style>
     :root {
@@ -13,15 +14,19 @@ index.html (Complete Gen AI App)
       --card: #ffffff;
       --text: #1e293b;
       --muted: #475569;
-      --border: #cbd5e1;
+      --border: #94a3b8;
+      --surface-subtle: #f8fafc;
       --pill: #ccfbf1;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --error-text: #991b1b;
     }
 
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
@@ -32,7 +37,7 @@ index.html (Complete Gen AI App)
     }
 
     .container {
-      max-width: 860px;
+      max-width: 880px;
       margin: 0 auto;
     }
 
@@ -43,8 +48,9 @@ index.html (Complete Gen AI App)
 
     header h1 {
       color: var(--primary-dark);
-      font-size: 1.9rem;
-      margin-bottom: 0.35rem;
+      font-size: 1.95rem;
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
     }
 
     header p {
@@ -56,29 +62,30 @@ index.html (Complete Gen AI App)
       display: inline-block;
       background: var(--pill);
       color: var(--primary-dark);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      padding: 0.25rem 0.7rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 999px;
       margin-bottom: 0.5rem;
     }
 
     .card {
       background: var(--card);
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 1.5rem;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-      margin-bottom: 1.4rem;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      margin-bottom: 1.35rem;
     }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
       margin-bottom: 1rem;
     }
 
-    @media (max-width: 620px) {
+    @media (max-width: 640px) {
       .grid-2 {
         grid-template-columns: 1fr;
       }
@@ -98,31 +105,31 @@ index.html (Complete Gen AI App)
 
     input, textarea, select {
       width: 100%;
-      padding: 0.72rem;
+      padding: 0.72rem 0.8rem;
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 0.95rem;
       color: var(--text);
-      background: #ffffff;
+      background: var(--card);
     }
 
     textarea {
-      min-height: 105px;
+      min-height: 108px;
       resize: vertical;
     }
 
     .api-box {
-      background: #f8fafc;
-      border: 1px dashed #94a3b8;
-      padding: 0.9rem;
+      background: var(--surface-subtle);
+      border: 1px dashed var(--border);
+      padding: 0.95rem;
       border-radius: 8px;
       margin-bottom: 1rem;
     }
 
     .helper-text {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--muted);
-      margin-top: 0.3rem;
+      margin-top: 0.35rem;
     }
 
     .actions {
@@ -135,11 +142,16 @@ index.html (Complete Gen AI App)
     button {
       border: none;
       border-radius: 8px;
-      padding: 0.78rem 1.2rem;
+      padding: 0.78rem 1.25rem;
       font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      transition: background-color 0.18s ease, opacity 0.18s ease;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
     }
 
     .btn-primary {
@@ -147,7 +159,7 @@ index.html (Complete Gen AI App)
       color: #ffffff;
     }
 
-    .btn-primary:hover {
+    .btn-primary:hover:not(:disabled) {
       background: var(--primary-dark);
     }
 
@@ -156,7 +168,7 @@ index.html (Complete Gen AI App)
       color: var(--text);
     }
 
-    .btn-secondary:hover {
+    .btn-secondary:hover:not(:disabled) {
       background: #cbd5e1;
     }
 
@@ -170,22 +182,22 @@ index.html (Complete Gen AI App)
 
     .metrics {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.85rem;
       margin-top: 1rem;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 700px) {
       .metrics {
         grid-template-columns: 1fr;
       }
     }
 
     .metric-box {
-      background: #f8fafc;
+      background: var(--surface-subtle);
       border: 1px solid #e2e8f0;
       border-radius: 10px;
-      padding: 0.9rem;
+      padding: 0.95rem;
     }
 
     .metric-label {
@@ -206,35 +218,36 @@ index.html (Complete Gen AI App)
     .list-card {
       border: 1px solid #e2e8f0;
       border-radius: 10px;
-      padding: 0.9rem 1rem;
+      padding: 0.95rem 1.05rem;
       margin-top: 0.75rem;
-      background: #ffffff;
+      background: var(--card);
     }
 
     .badge {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 700;
-      padding: 0.15rem 0.55rem;
+      padding: 0.18rem 0.6rem;
       border-radius: 999px;
       background: var(--pill);
       color: var(--primary-dark);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
     }
 
     .status-note {
       font-size: 0.86rem;
       color: var(--muted);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
     }
 
     .error-box {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #991b1b;
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      color: var(--error-text);
       padding: 0.9rem 1rem;
       border-radius: 8px;
-      font-weight: 500;
+      font-weight: 600;
+      margin-bottom: 1rem;
     }
 
     footer {
@@ -254,17 +267,21 @@ index.html (Complete Gen AI App)
     </header>
 
     <main>
-      <section class="card" aria-label="Routine Input Form">
-        <form id="planForm">
+      <section class="card" aria-labelledby="formHeading">
+        <h2 id="formHeading" class="status-note">Routine &amp; Household Details</h2>
+        <form id="planForm" novalidate>
           <div class="api-box">
             <label for="apiKeyInput">Google Gemini API Key (Optional for Demo Mode)</label>
             <input
               id="apiKeyInput"
               type="password"
               autocomplete="off"
+              aria-describedby="apiKeyHelp"
               placeholder="Paste Gemini API Key (AIza...) for live Gen AI generation"
             />
-            <p class="helper-text">Runs directly in your browser—your key is never stored. Leave blank to test with smart routine analysis.</p>
+            <p id="apiKeyHelp" class="helper-text">
+              Runs directly in your browser—your key is never stored. Leave blank to test with smart routine analysis.
+            </p>
           </div>
 
           <div class="grid-2">
@@ -299,6 +316,16 @@ index.html (Complete Gen AI App)
   </div>
 
   <script>
+    const SAMPLE_DATA = Object.freeze({
+      city: "Mumbai, Maharashtra",
+      household: "4 members (2 working adults, 1 senior, 1 child)",
+      routine:
+        "Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs."
+    });
+
+    const GEMINI_MODEL = "gemini-2.5-flash";
+    const REQUEST_TIMEOUT_MS = 12000;
+
     const DOM = {
       form: document.getElementById("planForm"),
       apiKeyInput: document.getElementById("apiKeyInput"),
@@ -310,6 +337,11 @@ index.html (Complete Gen AI App)
       outputSection: document.getElementById("outputSection")
     };
 
+    /**
+     * Escapes special HTML characters to prevent XSS when inserting strings into HTML.
+     * @param {unknown} value
+     * @returns {string}
+     */
     function escapeHtml(value = "") {
       return String(value)
         .replaceAll("&", "&amp;")
@@ -319,15 +351,33 @@ index.html (Complete Gen AI App)
         .replaceAll("'", "&#39;");
     }
 
+    /**
+     * Extracts and parses JSON safely even if wrapped in markdown code fences.
+     * @param {string} rawText
+     * @returns {object}
+     */
+    function extractJsonPayload(rawText) {
+      const trimmed = String(rawText || "").trim();
+      const fencedMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+      const candidate = fencedMatch ? fencedMatch[1].trim() : trimmed;
+      return JSON.parse(candidate);
+    }
+
+    /**
+     * Builds a deterministic, routine-aware air quality plan for offline/demo use.
+     * @param {string} city
+     * @param {string} household
+     * @param {string} routine
+     */
     function buildFallbackPlan(city, household, routine) {
-      const cleanCity = city.trim() || "Mumbai, Maharashtra";
-      const cleanHousehold = household.trim() || "4-member household";
-      const text = routine.toLowerCase();
+      const cleanCity = String(city || "").trim() || SAMPLE_DATA.city;
+      const cleanHousehold = String(household || "").trim() || SAMPLE_DATA.household;
+      const text = String(routine || "").toLowerCase();
 
       const steps = [];
       const indoorHacks = [];
 
-      if (text.includes("car") || text.includes("commute") || text.includes("traffic") || text.includes("petrol")) {
+      if (/\b(car|commute|traffic|petrol|diesel|bike|auto)\b/.test(text)) {
         steps.push({
           difficulty: "Medium",
           action: "Shift 2 weekday commutes to Metro/Local train or carpool, and avoid idling in peak 9 AM / 7 PM traffic.",
@@ -335,7 +385,7 @@ index.html (Complete Gen AI App)
         });
       }
 
-      if (text.includes("ac") || text.includes("cooling")) {
+      if (/\b(ac|cooling|air conditioner|thermostat)\b/.test(text)) {
         steps.push({
           difficulty: "Easy",
           action: "Set AC thermostats to 24–25°C and clean mesh filters every 14 days to cut compressor energy load by 15%.",
@@ -343,7 +393,7 @@ index.html (Complete Gen AI App)
         });
       }
 
-      if (text.includes("laundry") || text.includes("clothes") || text.includes("dry")) {
+      if (/\b(laundry|clothes|dry|drying|wash)\b/.test(text)) {
         steps.push({
           difficulty: "Easy",
           action: "Batch laundry into full cold-water loads and air-dry on a sunny balcony instead of damp indoor rooms.",
@@ -359,14 +409,14 @@ index.html (Complete Gen AI App)
         });
       }
 
-      if (text.includes("stove") || text.includes("cook") || text.includes("chimney")) {
+      if (/\b(stove|cook|cooking|chimney|gas|kitchen)\b/.test(text)) {
         indoorHacks.push({
           area: "Kitchen • Morning & Evening",
           tip: "Turn on an exhaust fan or crack a kitchen window 5 minutes before cooking, and cover pots while boiling or simmering."
         });
       }
 
-      if (text.includes("incense") || text.includes("agarbatti") || text.includes("smoke")) {
+      if (/\b(incense|agarbatti|dhoop|smoke|candle)\b/.test(text)) {
         indoorHacks.push({
           area: "Living Room • Morning",
           tip: "Switch daily indoor incense/agarbatti to essential-oil diffusers or burn incense only near an open balcony."
@@ -391,7 +441,54 @@ index.html (Complete Gen AI App)
       };
     }
 
+    /**
+     * Normalizes structured plan fields so rendering stays resilient across AI or fallback inputs.
+     * @param {object} rawPlan
+     * @param {string} city
+     * @param {string} household
+     * @param {string} routine
+     */
+    function normalizePlan(rawPlan, city, household, routine) {
+      const fallback = buildFallbackPlan(city, household, routine);
+      const sourceObj = rawPlan && typeof rawPlan === "object" ? rawPlan : fallback;
+
+      const validSteps =
+        Array.isArray(sourceObj.steps) && sourceObj.steps.length > 0
+          ? sourceObj.steps.map((item) => ({
+              difficulty: item?.difficulty || "Actionable",
+              action: item?.action || "",
+              replaces: item?.replaces || ""
+            })).filter((item) => item.action)
+          : fallback.steps;
+
+      const validHacks =
+        Array.isArray(sourceObj.indoorHacks) && sourceObj.indoorHacks.length > 0
+          ? sourceObj.indoorHacks.map((hack) => ({
+              area: hack?.area || "Home",
+              tip: hack?.tip || ""
+            })).filter((hack) => hack.tip)
+          : fallback.indoorHacks;
+
+      return {
+        source: sourceObj.source || `Google Gemini (${GEMINI_MODEL})`,
+        summary: sourceObj.summary || fallback.summary,
+        metrics: {
+          co2Saved: sourceObj.metrics?.co2Saved || fallback.metrics.co2Saved,
+          pm25Reduction: sourceObj.metrics?.pm25Reduction || fallback.metrics.pm25Reduction,
+          healthImpact: sourceObj.metrics?.healthImpact || fallback.metrics.healthImpact
+        },
+        steps: validSteps,
+        indoorHacks: validHacks
+      };
+    }
+
+    /**
+     * Calls the Gemini REST API with an AbortController timeout and returns a normalized plan.
+     */
     async function generateWithGemini(apiKey, city, household, routine) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
       const prompt = [
         "You are an urban air quality and household sustainability advisor.",
         "Return ONLY valid JSON with keys: summary, metrics (co2Saved, pm25Reduction, healthImpact), steps (array of {difficulty, action, replaces}), indoorHacks (array of {area, tip}).",
@@ -400,67 +497,70 @@ index.html (Complete Gen AI App)
         `Daily Routine: ${routine}`
       ].join("\n");
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-        {
+      try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`;
+        const response = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
           body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
             generationConfig: { responseMimeType: "application/json" }
           })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Gemini API request failed (${response.status})`);
         }
-      );
 
-      if (!response.ok) {
-        throw new Error(`Gemini API request failed (${response.status})`);
+        const data = await response.json();
+        const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!rawText) {
+          throw new Error("Empty response received from Gemini API");
+        }
+
+        const parsed = extractJsonPayload(rawText);
+        return normalizePlan(parsed, city, household, routine);
+      } finally {
+        clearTimeout(timeoutId);
       }
-
-      const data = await response.json();
-      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!rawText) {
-        throw new Error("Empty response received from Gemini API");
-      }
-
-      const parsed = JSON.parse(rawText);
-      return {
-        source: "Google Gemini (gemini-2.5-flash)",
-        summary: parsed.summary || `Tailored air quality plan for ${household} in ${city}.`,
-        metrics: {
-          co2Saved: parsed.metrics?.co2Saved || "14.0 kg CO₂ / week",
-          pm25Reduction: parsed.metrics?.pm25Reduction || "~35% lower indoor PM2.5",
-          healthImpact: parsed.metrics?.healthImpact || "Cleaner indoor air and lower daily exposure"
-        },
-        steps: Array.isArray(parsed.steps) && parsed.steps.length ? parsed.steps : buildFallbackPlan(city, household, routine).steps,
-        indoorHacks: Array.isArray(parsed.indoorHacks) && parsed.indoorHacks.length ? parsed.indoorHacks : buildFallbackPlan(city, household, routine).indoorHacks
-      };
     }
 
-    function renderPlan(plan) {
-      const stepsHtml = plan.steps
-        .map(
-          (item) => `
-            <div class="list-card">
-              <span class="badge">${escapeHtml(item.difficulty || "Actionable")}</span>
-              <p>${escapeHtml(item.action || "")}</p>
-              ${item.replaces ? `<p class="helper-text"><strong>Replaces:</strong> ${escapeHtml(item.replaces)}</p>` : ""}
-            </div>
-          `
-        )
-        .join("");
+    function renderCards(items, renderItem) {
+      return items.map(renderItem).join("");
+    }
 
-      const hacksHtml = plan.indoorHacks
-        .map(
-          (hack) => `
-            <div class="list-card">
-              <span class="badge">${escapeHtml(hack.area || "Home")}</span>
-              <p>${escapeHtml(hack.tip || "")}</p>
-            </div>
-          `
-        )
-        .join("");
+    /**
+     * Renders the complete air quality plan into the live output region.
+     */
+    function renderPlan(plan, noticeMessage = "") {
+      const stepsHtml = renderCards(
+        plan.steps,
+        (item) => `
+          <div class="list-card">
+            <span class="badge">${escapeHtml(item.difficulty)}</span>
+            <p>${escapeHtml(item.action)}</p>
+            ${item.replaces ? `<p class="helper-text"><strong>Replaces:</strong> ${escapeHtml(item.replaces)}</p>` : ""}
+          </div>
+        `
+      );
+
+      const hacksHtml = renderCards(
+        plan.indoorHacks,
+        (hack) => `
+          <div class="list-card">
+            <span class="badge">${escapeHtml(hack.area)}</span>
+            <p>${escapeHtml(hack.tip)}</p>
+          </div>
+        `
+      );
+
+      const noticeHtml = noticeMessage
+        ? `<div class="error-box">${escapeHtml(noticeMessage)}</div>`
+        : "";
 
       DOM.outputSection.innerHTML = `
+        ${noticeHtml}
         <div class="card">
           <h2>📊 Clear Impact Insights</h2>
           <p class="status-note">Mode: ${escapeHtml(plan.source)}</p>
@@ -493,7 +593,7 @@ index.html (Complete Gen AI App)
       `;
     }
 
-    function renderError(message) {
+    function renderValidationError(message) {
       DOM.outputSection.innerHTML = `
         <div class="card">
           <div class="error-box">${escapeHtml(message)}</div>
@@ -502,10 +602,9 @@ index.html (Complete Gen AI App)
     }
 
     DOM.sampleBtn.addEventListener("click", () => {
-      DOM.cityInput.value = "Mumbai, Maharashtra";
-      DOM.householdInput.value = "4 members (2 working adults, 1 senior, 1 child)";
-      DOM.routineInput.value =
-        "Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs.";
+      DOM.cityInput.value = SAMPLE_DATA.city;
+      DOM.householdInput.value = SAMPLE_DATA.household;
+      DOM.routineInput.value = SAMPLE_DATA.routine;
     });
 
     DOM.form.addEventListener("submit", async (event) => {
@@ -517,7 +616,7 @@ index.html (Complete Gen AI App)
       const routine = DOM.routineInput.value.trim();
 
       if (!city || !household || !routine) {
-        renderError("Please fill out City & Locality, Household Profile, and Family's Daily Routine.");
+        renderValidationError("Please fill out City & Locality, Household Profile, and Family's Daily Routine.");
         return;
       }
 
@@ -531,8 +630,8 @@ index.html (Complete Gen AI App)
         renderPlan(plan);
       } catch (err) {
         const fallback = buildFallbackPlan(city, household, routine);
-        renderPlan(fallback);
-        renderError(`${err.message}. Showing smart routine analysis fallback instead.`);
+        const detail = err?.name === "AbortError" ? "Request timed out." : (err?.message || "Unexpected error.");
+        renderPlan(fallback, `${detail} Showing smart routine analysis fallback instead.`);
       } finally {
         DOM.generateBtn.disabled = false;
         DOM.generateBtn.textContent = "✨ Generate Air Quality Plan";
@@ -541,5 +640,4 @@ index.html (Complete Gen AI App)
   </script>
 </body>
 </html>
-   
-    
+     
