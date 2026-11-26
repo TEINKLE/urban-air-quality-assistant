@@ -8,9 +8,7 @@ index.html (Complete Gen AI App)
   <title>Urban Air Quality Assistant | Gen AI Powered</title>
   <style>
     :root {
-      --primary: #0f766e;
-      --primary-dark: #115e59;
-      --bg: #f0fdf4;
+      --bg: #f1f5f9;
       --card: #ffffff;
       --text: #1e293b;
       --muted: #475569;
@@ -32,612 +30,364 @@ index.html (Complete Gen AI App)
     body {
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      padding: 1.25rem;
+      padding: 24px;
+      line-height: 1.5;
     }
 
     .container {
-      max-width: 880px;
+      max-width: 900px;
       margin: 0 auto;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    header h1 {
-      color: var(--primary-dark);
-      font-size: 1.95rem;
-      line-height: 1.25;
-      margin-bottom: 0.4rem;
-    }
-
-    header p {
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .tag {
-      display: inline-block;
-      background: var(--pill);
-      color: var(--primary-dark);
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      margin-bottom: 0.5rem;
     }
 
     .card {
       background: var(--card);
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
-      margin-bottom: 1.35rem;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    @media (max-width: 640px) {
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .field-group {
-      margin-bottom: 1rem;
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.35rem;
-      color: var(--text);
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 0.72rem 0.8rem;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.95rem;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .pill {
+      display: inline-block;
+      background: var(--pill);
       color: var(--text);
-      background: var(--card);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
 
-    textarea {
-      min-height: 108px;
-      resize: vertical;
+    .balance-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-top: 4px;
     }
 
-    .api-box {
-      background: var(--surface-subtle);
-      border: 1px dashed var(--border);
-      padding: 0.95rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-
-    .helper-text {
-      font-size: 0.84rem;
+    .muted {
       color: var(--muted);
-      margin-top: 0.35rem;
+      font-size: 0.9rem;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
+      gap: 10px;
+      margin: 14px 0;
     }
 
-    button {
-      border: none;
+    .btn {
+      padding: 8px 14px;
       border-radius: 8px;
-      padding: 0.78rem 1.25rem;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.18s ease, opacity 0.18s ease;
-    }
-
-    button:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover:not(:disabled) {
-      background: #cbd5e1;
-    }
-
-    button:focus-visible,
-    input:focus-visible,
-    textarea:focus-visible,
-    select:focus-visible {
-      outline: 3px solid var(--primary-dark);
-      outline-offset: 2px;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
-      margin-top: 1rem;
-    }
-
-    @media (max-width: 700px) {
-      .metrics {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .metric-box {
+      border: 1px solid var(--border);
       background: var(--surface-subtle);
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 0.95rem;
+      color: var(--text);
+      font-size: 0.9rem;
+      cursor: pointer;
     }
 
-    .metric-label {
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    .btn.primary {
+      background: #0f766e;
+      color: #ffffff;
+      border-color: #0f766e;
     }
 
-    .metric-value {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-      margin-top: 0.25rem;
+    .btn.sm {
+      padding: 5px 10px;
+      font-size: 0.8rem;
     }
 
-    .list-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 0.95rem 1.05rem;
-      margin-top: 0.75rem;
-      background: var(--card);
+    .feedback {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 0.76rem;
-      font-weight: 700;
-      padding: 0.18rem 0.6rem;
-      border-radius: 999px;
-      background: var(--pill);
-      color: var(--primary-dark);
-      margin-bottom: 0.4rem;
-    }
-
-    .status-note {
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin-bottom: 0.65rem;
-    }
-
-    .error-box {
+    .feedback.error {
+      display: block;
       background: var(--error-bg);
       border: 1px solid var(--error-border);
       color: var(--error-text);
-      padding: 0.9rem 1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      margin-bottom: 1rem;
     }
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 1.5rem;
+    .feedback.info {
+      display: block;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--surface-subtle);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <span class="tag">Challenge 06 • Urban Sustainability</span>
-      <h1>Urban Air Quality Assistant</h1>
-      <p>Turn your family's daily routine into tailored low-emission steps, indoor air hacks, and clear impact insights.</p>
-    </header>
+  <main class="container">
+    <section class="card" aria-label="Credits">
+      <div class="header-row">
+        <div>
+          <h1>Credits</h1>
+          <p class="muted">Current balance</p>
+          <div id="current-balance" class="balance-value">0</div>
+        </div>
+        <div>
+          <span class="pill">Admin: nilimaingole2001@gmail.com</span>
+        </div>
+      </div>
 
-    <main>
-      <section class="card" aria-labelledby="formHeading">
-        <h2 id="formHeading" class="status-note">Routine &amp; Household Details</h2>
-        <form id="planForm" novalidate>
-          <div class="api-box">
-            <label for="apiKeyInput">Google Gemini API Key (Optional for Demo Mode)</label>
-            <input
-              id="apiKeyInput"
-              type="password"
-              autocomplete="off"
-              aria-describedby="apiKeyHelp"
-              placeholder="Paste Gemini API Key (AIza...) for live Gen AI generation"
-            />
-            <p id="apiKeyHelp" class="helper-text">
-              Runs directly in your browser—your key is never stored. Leave blank to test with smart routine analysis.
-            </p>
-          </div>
+      <p class="muted">
+        Need more credits? Upload a CSV grant (<code>email,credits</code>), edit balance, or redeem an item below.
+      </p>
 
-          <div class="grid-2">
-            <div>
-              <label for="cityInput">City &amp; Locality</label>
-              <input id="cityInput" type="text" value="Mumbai, Maharashtra" required />
-            </div>
-            <div>
-              <label for="householdInput">Household Profile</label>
-              <input id="householdInput" type="text" value="4 members (2 working adults, 1 senior, 1 child)" required />
-            </div>
-          </div>
+      <div class="actions">
+        <label for="csv-grant-file" class="btn primary">Upload CSV Grant</label>
+        <input id="csv-grant-file" type="file" accept=".csv,text/csv" hidden />
 
-          <div class="field-group">
-            <label for="routineInput">Family's Daily Routine (Commute, Cooking, Cooling, Habits)</label>
-            <textarea id="routineInput" required>Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs.</textarea>
-          </div>
+        <button type="button" class="btn" onclick="editBalance()">
+          Edit Balance
+        </button>
+        <button type="button" class="btn" onclick="redeemItem('Clean Air Checklist', 20, 'Ordered')">
+          Redeem items → (20 cr)
+        </button>
+        <button type="button" class="btn" onclick="redeemItem('Indoor AQI Guide', 40, 'Processing')">
+          Redeem AQI Guide (40 cr)
+        </button>
+        <button type="button" class="btn" onclick="resetDemo()">
+          Reset
+        </button>
+      </div>
 
-          <div class="actions">
-            <button type="submit" id="generateBtn" class="btn-primary">✨ Generate Air Quality Plan</button>
-            <button type="button" id="sampleBtn" class="btn-secondary">Load Sample Routine</button>
-          </div>
-        </form>
-      </section>
+      <div id="feedback-box" class="feedback" role="status" aria-live="polite"></div>
+    </section>
 
-      <section id="outputSection" role="region" aria-live="polite" aria-label="Generated Air Quality Plan"></section>
-    </main>
-
-    <footer>
-      Built by Nilima Pralhad Ingole • Powered by Google Gemini Gen AI
-    </footer>
-  </div>
+    <section class="card" aria-label="Ledger">
+      <h2>Ledger</h2>
+      <p class="muted">
+        Activity shows the order's current status when it applies (Ordered, Processing, Shipped, …), plus whether credits were Credited or Debited on that row—matching the +/− in the Credits column.
+      </p>
+      <div id="ledger-output"></div>
+    </section>
+  </main>
 
   <script>
-    const SAMPLE_DATA = Object.freeze({
-      city: "Mumbai, Maharashtra",
-      household: "4 members (2 working adults, 1 senior, 1 child)",
-      routine:
-        "Two family members commute 14 km each way by petrol car during peak 9 AM and 7 PM traffic. At home, we cook twice daily on a gas stove without a chimney, burn incense sticks every morning, dry clothes indoors, and keep windows closed all day while running 2 ACs."
-    });
+    const ADMIN_EMAILS = ["nilimaingole2001@gmail.com"];
+    const DEFAULT_USER_EMAIL = "nilimaingole2001@gmail.com";
+    const STORAGE_KEY = "credits_ledger_state_v1";
+    const STATUS_FLOW = ["Ordered", "Processing", "Shipped", "Delivered"];
 
-    const GEMINI_MODEL = "gemini-2.5-flash";
-    const REQUEST_TIMEOUT_MS = 12000;
-
-    const DOM = {
-      form: document.getElementById("planForm"),
-      apiKeyInput: document.getElementById("apiKeyInput"),
-      cityInput: document.getElementById("cityInput"),
-      householdInput: document.getElementById("householdInput"),
-      routineInput: document.getElementById("routineInput"),
-      sampleBtn: document.getElementById("sampleBtn"),
-      generateBtn: document.getElementById("generateBtn"),
-      outputSection: document.getElementById("outputSection")
-    };
-
-    /**
-     * Escapes special HTML characters to prevent XSS when inserting strings into HTML.
-     * @param {unknown} value
-     * @returns {string}
-     */
-    function escapeHtml(value = "") {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    /**
-     * Extracts and parses JSON safely even if wrapped in markdown code fences.
-     * @param {string} rawText
-     * @returns {object}
-     */
-    function extractJsonPayload(rawText) {
-      const trimmed = String(rawText || "").trim();
-      const fencedMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
-      const candidate = fencedMatch ? fencedMatch[1].trim() : trimmed;
-      return JSON.parse(candidate);
-    }
-
-    /**
-     * Builds a deterministic, routine-aware air quality plan for offline/demo use.
-     * @param {string} city
-     * @param {string} household
-     * @param {string} routine
-     */
-    function buildFallbackPlan(city, household, routine) {
-      const cleanCity = String(city || "").trim() || SAMPLE_DATA.city;
-      const cleanHousehold = String(household || "").trim() || SAMPLE_DATA.household;
-      const text = String(routine || "").toLowerCase();
-
-      const steps = [];
-      const indoorHacks = [];
-
-      if (/\b(car|commute|traffic|petrol|diesel|bike|auto)\b/.test(text)) {
-        steps.push({
-          difficulty: "Medium",
-          action: "Shift 2 weekday commutes to Metro/Local train or carpool, and avoid idling in peak 9 AM / 7 PM traffic.",
-          replaces: "Solo peak-hour petrol car trips"
-        });
-      }
-
-      if (/\b(ac|cooling|air conditioner|thermostat)\b/.test(text)) {
-        steps.push({
-          difficulty: "Easy",
-          action: "Set AC thermostats to 24–25°C and clean mesh filters every 14 days to cut compressor energy load by 15%.",
-          replaces: "Continuous low-temperature AC cooling with clogged filters"
-        });
-      }
-
-      if (/\b(laundry|clothes|dry|drying|wash)\b/.test(text)) {
-        steps.push({
-          difficulty: "Easy",
-          action: "Batch laundry into full cold-water loads and air-dry on a sunny balcony instead of damp indoor rooms.",
-          replaces: "Frequent partial loads & indoor moisture buildup"
-        });
-      }
-
-      if (steps.length === 0) {
-        steps.push({
-          difficulty: "Easy",
-          action: "Combine errands into single off-peak trips and switch off idle appliances at the plug.",
-          replaces: "Fragmented trips & standby power waste"
-        });
-      }
-
-      if (/\b(stove|cook|cooking|chimney|gas|kitchen)\b/.test(text)) {
-        indoorHacks.push({
-          area: "Kitchen • Morning & Evening",
-          tip: "Turn on an exhaust fan or crack a kitchen window 5 minutes before cooking, and cover pots while boiling or simmering."
-        });
-      }
-
-      if (/\b(incense|agarbatti|dhoop|smoke|candle)\b/.test(text)) {
-        indoorHacks.push({
-          area: "Living Room • Morning",
-          tip: "Switch daily indoor incense/agarbatti to essential-oil diffusers or burn incense only near an open balcony."
-        });
-      }
-
-      indoorHacks.push({
-        area: "Bedrooms • Daily",
-        tip: "Keep 2–3 low-maintenance indoor plants (Snake Plant, Areca Palm) and wet-mop floors instead of dry sweeping."
-      });
-
-      return {
-        source: "Demo Routine Engine",
-        summary: `Tailored air quality plan for your ${cleanHousehold} household in ${cleanCity}. Small shifts in peak-hour travel and indoor ventilation can cut personal pollution exposure significantly within 7 days.`,
-        metrics: {
-          co2Saved: "16.5 kg CO₂ / week",
-          pm25Reduction: "~38% lower indoor PM2.5",
-          healthImpact: "Reduced airway irritation & better sleep quality for seniors and children"
-        },
-        steps,
-        indoorHacks
-      };
-    }
-
-    /**
-     * Normalizes structured plan fields so rendering stays resilient across AI or fallback inputs.
-     * @param {object} rawPlan
-     * @param {string} city
-     * @param {string} household
-     * @param {string} routine
-     */
-    function normalizePlan(rawPlan, city, household, routine) {
-      const fallback = buildFallbackPlan(city, household, routine);
-      const sourceObj = rawPlan && typeof rawPlan === "object" ? rawPlan : fallback;
-
-      const validSteps =
-        Array.isArray(sourceObj.steps) && sourceObj.steps.length > 0
-          ? sourceObj.steps.map((item) => ({
-              difficulty: item?.difficulty || "Actionable",
-              action: item?.action || "",
-              replaces: item?.replaces || ""
-            })).filter((item) => item.action)
-          : fallback.steps;
-
-      const validHacks =
-        Array.isArray(sourceObj.indoorHacks) && sourceObj.indoorHacks.length > 0
-          ? sourceObj.indoorHacks.map((hack) => ({
-              area: hack?.area || "Home",
-              tip: hack?.tip || ""
-            })).filter((hack) => hack.tip)
-          : fallback.indoorHacks;
-
-      return {
-        source: sourceObj.source || `Google Gemini (${GEMINI_MODEL})`,
-        summary: sourceObj.summary || fallback.summary,
-        metrics: {
-          co2Saved: sourceObj.metrics?.co2Saved || fallback.metrics.co2Saved,
-          pm25Reduction: sourceObj.metrics?.pm25Reduction || fallback.metrics.pm25Reduction,
-          healthImpact: sourceObj.metrics?.healthImpact || fallback.metrics.healthImpact
-        },
-        steps: validSteps,
-        indoorHacks: validHacks
-      };
-    }
-
-    /**
-     * Calls the Gemini REST API with an AbortController timeout and returns a normalized plan.
-     */
-    async function generateWithGemini(apiKey, city, household, routine) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-      const prompt = [
-        "You are an urban air quality and household sustainability advisor.",
-        "Return ONLY valid JSON with keys: summary, metrics (co2Saved, pm25Reduction, healthImpact), steps (array of {difficulty, action, replaces}), indoorHacks (array of {area, tip}).",
-        `City: ${city}`,
-        `Household: ${household}`,
-        `Daily Routine: ${routine}`
-      ].join("\n");
-
+    function loadState() {
       try {
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`;
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: controller.signal,
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { responseMimeType: "application/json" }
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Gemini API request failed (${response.status})`);
-        }
-
-        const data = await response.json();
-        const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!rawText) {
-          throw new Error("Empty response received from Gemini API");
-        }
-
-        const parsed = extractJsonPayload(rawText);
-        return normalizePlan(parsed, city, household, routine);
-      } finally {
-        clearTimeout(timeoutId);
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return { balance: 0, transactions: [] };
+        const data = JSON.parse(raw);
+        return {
+          balance: Number(data.balance) || 0,
+          transactions: Array.isArray(data.transactions) ? data.transactions : []
+        };
+      } catch {
+        return { balance: 0, transactions: [] };
       }
     }
 
-    function renderCards(items, renderItem) {
-      return items.map(renderItem).join("");
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    /**
-     * Renders the complete air quality plan into the live output region.
-     */
-    function renderPlan(plan, noticeMessage = "") {
-      const stepsHtml = renderCards(
-        plan.steps,
-        (item) => `
-          <div class="list-card">
-            <span class="badge">${escapeHtml(item.difficulty)}</span>
-            <p>${escapeHtml(item.action)}</p>
-            ${item.replaces ? `<p class="helper-text"><strong>Replaces:</strong> ${escapeHtml(item.replaces)}</p>` : ""}
-          </div>
-        `
-      );
-
-      const hacksHtml = renderCards(
-        plan.indoorHacks,
-        (hack) => `
-          <div class="list-card">
-            <span class="badge">${escapeHtml(hack.area)}</span>
-            <p>${escapeHtml(hack.tip)}</p>
-          </div>
-        `
-      );
-
-      const noticeHtml = noticeMessage
-        ? `<div class="error-box">${escapeHtml(noticeMessage)}</div>`
-        : "";
-
-      DOM.outputSection.innerHTML = `
-        ${noticeHtml}
-        <div class="card">
-          <h2>📊 Clear Impact Insights</h2>
-          <p class="status-note">Mode: ${escapeHtml(plan.source)}</p>
-          <p>${escapeHtml(plan.summary)}</p>
-          <div class="metrics">
-            <div class="metric-box">
-              <div class="metric-label">Est. Weekly CO₂ Saved</div>
-              <div class="metric-value">${escapeHtml(plan.metrics.co2Saved)}</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-label">Indoor PM2.5 Reduction</div>
-              <div class="metric-value">${escapeHtml(plan.metrics.pm25Reduction)}</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-label">Household Health Impact</div>
-              <div class="metric-value">${escapeHtml(plan.metrics.healthImpact)}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>🚲 Tailored Low-Emission Steps</h2>
-          ${stepsHtml}
-        </div>
-
-        <div class="card">
-          <h2>🏡 Indoor Air Quality Hacks</h2>
-          ${hacksHtml}
-        </div>
-      `;
+    function showFeedback(message, isError = false) {
+      const box = document.getElementById("feedback-box");
+      box.textContent = message;
+      box.className = isError ? "feedback error" : "feedback info";
     }
 
-    function renderValidationError(message) {
-      DOM.outputSection.innerHTML = `
-        <div class="card">
-          <div class="error-box">${escapeHtml(message)}</div>
-        </div>
-      `;
-    }
+    function renderUI() {
+      const state = loadState();
+      document.getElementById("current-balance").textContent = String(state.balance);
 
-    DOM.sampleBtn.addEventListener("click", () => {
-      DOM.cityInput.value = SAMPLE_DATA.city;
-      DOM.householdInput.value = SAMPLE_DATA.household;
-      DOM.routineInput.value = SAMPLE_DATA.routine;
-    });
-
-    DOM.form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const apiKey = DOM.apiKeyInput.value.trim();
-      const city = DOM.cityInput.value.trim();
-      const household = DOM.householdInput.value.trim();
-      const routine = DOM.routineInput.value.trim();
-
-      if (!city || !household || !routine) {
-        renderValidationError("Please fill out City & Locality, Household Profile, and Family's Daily Routine.");
+      const ledgerEl = document.getElementById("ledger-output");
+      if (!state.transactions.length) {
+        ledgerEl.innerHTML = `<p class="muted" style="margin-top:12px;">No transactions yet. Credits appear after an admin CSV upload, checkout, or refunds.</p>`;
         return;
       }
 
-      DOM.generateBtn.disabled = true;
-      DOM.generateBtn.textContent = "Generating Plan...";
+      const rowsHtml = state.transactions
+        .map((tx, idx) => {
+          const sign = tx.direction === "Credited" ? "+" : "-";
+          const canEditStatus = tx.direction === "Debited";
+          const actionCell = canEditStatus
+            ? `<button type="button" class="btn sm" onclick="editRowStatus(${idx})">Edit Status</button>`
+            : `<span class="muted">—</span>`;
 
-      try {
-        const plan = apiKey
-          ? await generateWithGemini(apiKey, city, household, routine)
-          : buildFallbackPlan(city, household, routine);
-        renderPlan(plan);
-      } catch (err) {
-        const fallback = buildFallbackPlan(city, household, routine);
-        const detail = err?.name === "AbortError" ? "Request timed out." : (err?.message || "Unexpected error.");
-        renderPlan(fallback, `${detail} Showing smart routine analysis fallback instead.`);
-      } finally {
-        DOM.generateBtn.disabled = false;
-        DOM.generateBtn.textContent = "✨ Generate Air Quality Plan";
+          return `
+            <tr>
+              <td>${tx.activity}</td>
+              <td>${tx.direction}</td>
+              <td>${tx.status || "—"}</td>
+              <td><strong>${sign}${tx.credits}</strong></td>
+              <td>${actionCell}</td>
+            </tr>
+          `;
+        })
+        .join("");
+
+      ledgerEl.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Credits</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      `;
+    }
+
+    function editBalance() {
+      const state = loadState();
+      const input = prompt("Naya credit balance enter karein:", String(state.balance));
+      if (input === null) return;
+
+      const nextBalance = Number(input.trim());
+      if (!Number.isFinite(nextBalance) || nextBalance < 0) {
+        showFeedback("Kripya 0 ya usse bada valid number enter karein.", true);
+        return;
       }
-    });
+
+      const diff = nextBalance - state.balance;
+      state.balance = nextBalance;
+
+      if (diff !== 0) {
+        state.transactions.unshift({
+          activity: `Manual Balance Edit (${DEFAULT_USER_EMAIL})`,
+          direction: diff > 0 ? "Credited" : "Debited",
+          status: "Adjusted",
+          credits: Math.abs(diff)
+        });
+      }
+
+      saveState(state);
+      showFeedback(`Balance update hokar ${nextBalance} ho gaya hai.`);
+      renderUI();
+    }
+
+    function editRowStatus(index) {
+      const state = loadState();
+      const tx = state.transactions[index];
+      if (!tx) return;
+
+      const currentIdx = STATUS_FLOW.indexOf(tx.status);
+      const nextStatus = STATUS_FLOW[(currentIdx + 1) % STATUS_FLOW.length];
+      tx.status = nextStatus;
+
+      saveState(state);
+      showFeedback(`Row status badal kar "${nextStatus}" kar diya gaya hai.`);
+      renderUI();
+    }
+
+    function handleCsvGrant(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const lines = String(reader.result || "")
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter(Boolean);
+
+        const state = loadState();
+        let totalCredited = 0;
+
+        lines.forEach((line, index) => {
+          const cols = line.split(",").map((c) => c.trim());
+          if (index === 0 && /email/i.test(cols[0] || "")) return;
+
+          const email = cols[0] || DEFAULT_USER_EMAIL;
+          const amount = Number(cols[1]);
+
+          if (Number.isFinite(amount) && amount > 0) {
+            state.balance += amount;
+            totalCredited += amount;
+            state.transactions.unshift({
+              activity: `CSV Grant — ${email}`,
+              direction: "Credited",
+              status: "Completed",
+              credits: amount
+            });
+          }
+        });
+
+        if (totalCredited <= 0) {
+          showFeedback("CSV file mein valid positive credits nahi mile. Format use karein: email,credits", true);
+        } else {
+          saveState(state);
+          showFeedback(`+${totalCredited} credits add ho gaye (${ADMIN_EMAILS[0]}).`);
+        }
+
+        renderUI();
+        event.target.value = "";
+      };
+
+      reader.readAsText(file);
+    }
+
+    function redeemItem(itemName, cost, status) {
+      const state = loadState();
+      if (state.balance < cost) {
+        showFeedback(`Balance kam hai: "${itemName}" ke liye ${cost} credits chahiye, abhi ${state.balance} hain.`, true);
+        return;
+      }
+
+      state.balance -= cost;
+      state.transactions.unshift({
+        activity: `Order: ${itemName}`,
+        direction: "Debited",
+        status,
+        credits: cost
+      });
+
+      saveState(state);
+      showFeedback(`"${itemName}" redeem ho gaya (-${cost} credits, Status: ${status}).`);
+      renderUI();
+    }
+
+    function resetDemo() {
+      localStorage.removeItem(STORAGE_KEY);
+      showFeedback("Balance 0 aur Ledger reset kar diya gaya hai.");
+      renderUI();
+    }
+
+    document.getElementById("csv-grant-file").addEventListener("change", handleCsvGrant);
+    renderUI();
   </script>
 </body>
 </html>
-     
+
+   
